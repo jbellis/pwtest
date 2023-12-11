@@ -5,7 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 from tqdm.auto import tqdm
 
-from db import DB
+from db import DB, DIMENSIONS
+
 
 thread_local_storage = threading.local()
 
@@ -15,7 +16,7 @@ def get_db_handle():
     return thread_local_storage.db_handle
 
 def upsert_row(id):
-    vector = [round(random.uniform(-1.0, 1.0), 9) for _ in range(16)]
+    vector = [round(random.uniform(-1.0, 1.0), 9) for _ in range(DIMENSIONS)]
     # 99% of intents are academic
     intent_type = 'academic' if random.random() < 0.99 else None
     # types are evenly split
