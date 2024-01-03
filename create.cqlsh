@@ -1,0 +1,12 @@
+create keyspace pw WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
+CREATE TABLE pw.embeddings_table_mock (
+    row_id text PRIMARY KEY,
+    attributes_blob text,
+    body_blob text,
+    metadata_s map<text, text>,
+    vector vector<float, 16>
+);
+
+CREATE CUSTOM INDEX ON pw.embeddings_table_mock(entries(metadata_s)) USING 'StorageAttachedIndex';
+CREATE CUSTOM INDEX ON pw.embeddings_table_mock(vector) USING 'StorageAttachedIndex';
